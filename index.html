@@ -3,232 +3,266 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="MouseTracer — Test your reaction speed, aim precision, and click speed. Three mouse skill tests by Umar Sohail.">
+<meta name="theme-color" content="#08090f">
 <title>MouseTracer — Mouse Skill Tester</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- ════════════ HOME ════════════ -->
+<!-- ════════ HOME ════════ -->
 <div id="pgHome" class="pg pg-show">
-  <div class="bg-grid"></div>
+  <div class="home-noise"></div>
+  <div class="home-glow-a"></div>
+  <div class="home-glow-b"></div>
   <div class="home-wrap">
 
     <header class="home-hdr">
-      <p class="home-eyebrow">MOUSE SKILL TESTER</p>
-      <h1 class="home-title">MOUSE<span>TRACER</span></h1>
-      <div class="home-rule"></div>
-      <p class="home-sub">Test your reaction speed, cursor tracking, and click performance.</p>
+      <div class="home-pill-tag">MOUSE SKILL TESTER · BY UMAR SOHAIL</div>
+      <h1 class="home-title">MOUSE<br><span>TRACER</span></h1>
+      <p class="home-sub">Three tests. Measure your mouse speed, precision, and control.</p>
     </header>
 
     <div class="mode-grid">
 
-      <button class="mcard mcard-react" id="btnReact">
-        <div class="mcard-top">
-          <span class="mcard-num">01</span>
-          <div class="mcard-icon">
-            <div class="ra-ring"></div>
-            <div class="ra-dot"></div>
+      <button class="mcard mcard-r" id="btnReact">
+        <div class="mcard-accent mcard-accent-r"></div>
+        <div class="mcard-header">
+          <span class="mcard-index">01</span>
+          <div class="mcard-icon-wrap">
+            <div class="ri-ring"></div>
+            <div class="ri-dot"></div>
           </div>
         </div>
-        <div class="mcard-name">Reaction Test</div>
-        <div class="mcard-desc">Screen turns red — wait. The instant it flips green, click. Measures your pure reflex speed in milliseconds.</div>
-        <div class="mcard-best" id="hReactBest"></div>
-        <div class="mcard-cta">START TEST →</div>
+        <div class="mcard-label">Reaction Test</div>
+        <div class="mcard-body">Wait for the screen to turn green — click the instant it does. Measures your raw reaction speed in milliseconds.</div>
+        <div class="mcard-meta">
+          <span class="mcard-best" id="hReactBest"></span>
+          <span class="mcard-go">START →</span>
+        </div>
       </button>
 
-      <button class="mcard mcard-track" id="btnTrack">
-        <div class="mcard-top">
-          <span class="mcard-num">02</span>
-          <div class="mcard-icon">
-            <div class="ta-orbit"></div>
-            <div class="ta-target"></div>
-            <div class="ta-cursor"></div>
+      <button class="mcard mcard-t" id="btnTrack">
+        <div class="mcard-accent mcard-accent-t"></div>
+        <div class="mcard-header">
+          <span class="mcard-index">02</span>
+          <div class="mcard-icon-wrap">
+            <div class="ti-ring"></div>
+            <div class="ti-dot"></div>
+            <div class="ti-cursor"></div>
           </div>
         </div>
-        <div class="mcard-name">Mouse Tracking</div>
-        <div class="mcard-desc">A target moves continuously across the screen. Keep your cursor on it as long as possible. Tests control and precision.</div>
-        <div class="mcard-best" id="hTrackBest"></div>
-        <div class="mcard-cta">START TEST →</div>
+        <div class="mcard-label">Aim Trainer</div>
+        <div class="mcard-body">Targets appear at random positions. Hit them before they expire. 3 lives. Endless scaling — how far can your mouse skill take you?</div>
+        <div class="mcard-meta">
+          <span class="mcard-best mcard-best-t" id="hTrackBest"></span>
+          <span class="mcard-go mcard-go-t">START →</span>
+        </div>
       </button>
 
-      <button class="mcard mcard-cps" id="btnCPS">
-        <div class="mcard-top">
-          <span class="mcard-num">03</span>
-          <div class="mcard-icon cps-icon">
-            <div class="ca-bar cb1"></div>
-            <div class="ca-bar cb2"></div>
-            <div class="ca-bar cb3"></div>
-            <div class="ca-bar cb4"></div>
+      <button class="mcard mcard-c" id="btnCPS">
+        <div class="mcard-accent mcard-accent-c"></div>
+        <div class="mcard-header">
+          <span class="mcard-index">03</span>
+          <div class="mcard-icon-wrap ci-wrap">
+            <div class="ci-bar b1"></div>
+            <div class="ci-bar b2"></div>
+            <div class="ci-bar b3"></div>
+            <div class="ci-bar b4"></div>
+            <div class="ci-bar b5"></div>
           </div>
         </div>
-        <div class="mcard-name">Mouse Click Speed</div>
-        <div class="mcard-desc">Click as fast as you can for 5 seconds. Measures your raw click speed and consistency.</div>
-        <div class="mcard-best" id="hCPSBest"></div>
-        <div class="mcard-cta">START TEST →</div>
+        <div class="mcard-label">Click Speed</div>
+        <div class="mcard-body">5 seconds. Click the zone as fast as humanly possible. Measures clicks per second and peak clicking speed.</div>
+        <div class="mcard-meta">
+          <span class="mcard-best mcard-best-c" id="hCPSBest"></span>
+          <span class="mcard-go mcard-go-c">START →</span>
+        </div>
       </button>
 
     </div>
 
-    <footer class="home-footer">BY UMAR SOHAIL</footer>
+    <!-- Music toggle -->
+    <button class="music-btn" id="musicBtn" title="Toggle music">♪</button>
+
   </div>
 </div>
 
-<!-- ════════════ REACTION TEST ════════════ -->
+<!-- ════════ REACTION TEST ════════ -->
 <div id="pgReact" class="pg pg-hide">
   <button class="back-btn" id="rBack">← BACK</button>
 
   <div id="rIdle" class="rscreen">
-    <div class="rx-title">Reaction Test</div>
-    <div class="rx-desc">Screen goes <em class="c-red">RED</em> — wait without clicking.<br>The instant it turns <em class="c-grn">GREEN</em> — click anywhere.<br><span class="rx-note">Click early and the attempt won't count.</span></div>
-    <button class="pill pill-green" id="rBtnStart">START TEST</button>
+    <div class="mode-chip mode-chip-r">REACTION TEST</div>
+    <div class="rx-title">How fast are you?</div>
+    <p class="rx-desc">Screen turns <em class="c-red">RED</em> — wait, don't click.<br>
+    The instant it flips <em class="c-grn">GREEN</em> — click anywhere on screen.<br>
+    <span class="rx-note">Click before it goes green and the round won't count.</span></p>
+    <button class="big-pill pill-r" id="rBtnStart">START TEST</button>
     <div class="r-records" id="rRecords"></div>
   </div>
 
   <div id="rWait" class="rscreen rfull" style="display:none">
     <div class="r-bg-red"></div>
-    <div class="r-orb">
-      <div class="r-ring"></div>
-      <div class="r-face r-face-red">WAIT...</div>
-    </div>
+    <div class="r-orb"><div class="r-ring"></div><div class="r-face r-face-red">WAIT...</div></div>
     <p class="r-hint r-hint-red">Don't click yet</p>
   </div>
 
   <div id="rGo" class="rscreen rfull" style="display:none">
     <div class="r-bg-green"></div>
-    <div class="r-orb">
-      <div class="r-ring r-ring-green"></div>
-      <div class="r-face r-face-green">CLICK!</div>
-    </div>
+    <div class="r-orb"><div class="r-ring r-ring-green"></div><div class="r-face r-face-green">CLICK!</div></div>
     <p class="r-hint r-hint-green">NOW!</p>
   </div>
 
-  <div id="rEarly" class="rscreen rfull" style="display:none;background:#13100a;cursor:default">
+  <div id="rEarly" class="rscreen rfull" style="display:none;background:#140c02;cursor:default">
     <div class="early-icon">⚡</div>
     <div class="early-title">TOO EARLY</div>
     <div class="early-sub">You clicked before it turned green.</div>
-    <button class="pill pill-yel" id="rBtnEarlyRetry">TRY AGAIN</button>
+    <button class="big-pill pill-y" id="rBtnEarlyRetry">TRY AGAIN</button>
   </div>
 
   <div id="rResult" class="rscreen" style="display:none">
-    <p class="result-eyebrow">YOUR REACTION TIME</p>
-    <div class="result-big" id="rTime">—</div>
+    <p class="result-eye">YOUR REACTION TIME</p>
+    <div class="result-num" id="rTime">—</div>
     <div class="result-grade" id="rGrade"></div>
     <div class="result-stats" id="rStats"></div>
     <div class="result-btns">
-      <button class="pill pill-green" id="rBtnAgain">AGAIN</button>
-      <button class="pill pill-ghost" id="rBtnDone">DONE</button>
+      <button class="big-pill pill-r" id="rBtnAgain">AGAIN</button>
+      <button class="ghost-pill" id="rBtnDone">DONE</button>
     </div>
   </div>
 </div>
 
-<!-- ════════════ MOUSE TRACKING ════════════ -->
+<!-- ════════ AIM TRAINER ════════ -->
 <div id="pgTrack" class="pg pg-hide">
-  <button class="back-btn" id="tBack">← BACK</button>
   <canvas id="trackCv"></canvas>
 
-  <div id="tHud" class="game-hud" style="display:none">
-    <div class="hud-block">
-      <div class="hud-lbl">TIME</div>
-      <div class="hud-val" id="tHudTime">0.0s</div>
+  <div id="tHud" class="ghud" style="display:none">
+    <div class="ghud-block">
+      <div class="ghud-lbl">TIME</div>
+      <div class="ghud-val" id="tHudTime">0.0s</div>
     </div>
-    <div class="hud-block hud-center">
-      <div class="hud-tracking-bar">
-        <div class="hud-tracking-fill" id="tHudFill"></div>
+    <div class="ghud-block ghud-mid">
+      <div class="ghud-badge" id="tHudLevelBadge">LEVEL 1</div>
+      <div class="ghud-lives" id="tHudLives"></div>
+      <div class="ghud-bar-wrap">
+        <div class="ghud-bar"><div class="ghud-bar-fill" id="tHudFill"></div></div>
+        <div class="ghud-bar-lbl">ACCURACY</div>
       </div>
-      <div class="hud-bar-lbl">HIT ACCURACY</div>
     </div>
-    <div class="hud-block hud-right">
-      <div class="hud-lbl">SCORE</div>
-      <div class="hud-val" id="tHudScore">0</div>
+    <div class="ghud-block ghud-right">
+      <div class="ghud-lbl">SCORE</div>
+      <div class="ghud-val" id="tHudScore">0</div>
     </div>
   </div>
 
-  <div id="tOvStart" class="game-ov" style="display:none">
-    <div class="ov-chip">MODE 02</div>
-    <div class="ov-title">Mouse Tracking</div>
-    <div class="ov-sub">A target moves across the screen.<br>Keep your cursor inside it as long as possible.<br>Speed increases every 8 seconds.</div>
-    <button class="pill pill-cyan" id="tBtnStart">START</button>
+  <!-- Back button — bottom-left corner, well clear of HUD -->
+  <button class="aim-back-btn" id="tBackGame" style="display:none">← BACK</button>
+
+  <div id="tOvStart" class="gov" style="display:none">
+    <button class="back-btn" id="tBack">← BACK</button>
+    <div class="mode-chip mode-chip-t">AIM TRAINER</div>
+    <h2 class="gov-title">Click fast.<br>Click accurate.</h2>
+    <p class="gov-sub">Targets pop up randomly — click them before the ring empties.<br>Miss 3 targets and it's game over. Levels never stop increasing.</p>
+
+    <div class="mode-toggle-wrap">
+      <span class="mode-toggle-lbl">INPUT MODE</span>
+      <div class="mode-toggle" id="tModeToggle">
+        <button class="mtog-btn mtog-active" data-mode="click" id="mtogClick">
+          <span class="mtog-icon">🖱</span> CLICK
+        </button>
+        <button class="mtog-btn" data-mode="hover" id="mtogHover">
+          <span class="mtog-icon">✦</span> HOVER
+        </button>
+      </div>
+      <span class="mode-toggle-hint" id="tModeHint">Click targets to score</span>
+    </div>
+
+    <button class="big-pill pill-t" id="tBtnStart">START</button>
   </div>
 
-  <div id="tOvEnd" class="game-ov" style="display:none">
-    <div class="ov-chip">SESSION COMPLETE</div>
-    <div class="ov-title">Results</div>
-    <div class="result-grid">
-      <div class="rg-hero"><div class="rg-lbl">TRACKING</div><div class="rg-val" id="tRTracking">—</div></div>
-      <div class="rg-hero"><div class="rg-lbl">ON TARGET</div><div class="rg-val" id="tRTime">—</div></div>
+  <div id="tOvEnd" class="gov" style="display:none">
+    <div class="mode-chip mode-chip-t">SESSION OVER</div>
+    <h2 class="gov-title">Results</h2>
+    <div class="res-heroes">
+      <div class="res-hero"><div class="res-hl">SCORE</div><div class="res-hv" id="tRScore">0</div></div>
+      <div class="res-hero"><div class="res-hl">ACCURACY</div><div class="res-hv" id="tRTracking">—</div></div>
     </div>
-    <div class="result-rows">
-      <div class="rrow"><span>SCORE</span><span id="tRScore">0</span></div>
-      <div class="rrow hi"><span>LEVEL REACHED</span><span id="tRLevel">1</span></div>
-      <div class="rrow"><span>PERSONAL BEST</span><span id="tRBest">—</span></div>
+    <div class="res-rows">
+      <div class="res-row res-row-hi"><span>LEVEL REACHED</span><span id="tRLevel">1</span></div>
+      <div class="res-row"><span>TARGETS HIT</span><span id="tRTime">0</span></div>
+      <div class="res-row"><span>BEST STREAK</span><span id="tRStreak">0×</span></div>
+      <div class="res-row"><span>PERSONAL BEST</span><span id="tRBest">—</span></div>
     </div>
-    <div class="ov-btns">
-      <button class="pill pill-cyan" id="tBtnRetry">RETRY</button>
-      <button class="pill pill-ghost" id="tBtnMenu">MENU</button>
+    <div class="gov-btns">
+      <button class="big-pill pill-t" id="tBtnRetry">RETRY</button>
+      <button class="ghost-pill" id="tBtnMenu">MENU</button>
     </div>
   </div>
 </div>
 
-<!-- ════════════ CLICK SPEED TEST ════════════ -->
+<!-- ════════ CLICK SPEED TEST ════════ -->
 <div id="pgCPS" class="pg pg-hide">
   <button class="back-btn" id="cBack">← BACK</button>
 
-  <div id="cOvStart" class="game-ov" style="display:none">
-    <div class="ov-chip">MODE 03</div>
-    <div class="ov-title">Mouse Click Speed</div>
-    <div class="ov-sub">Click as fast as you can for 5 seconds.<br>Measures your clicks per second and total clicks.</div>
-    <button class="pill pill-green" id="cBtnStart">START TEST</button>
+  <div id="cOvStart" class="gov" style="display:none">
+    <div class="mode-chip mode-chip-c">CLICK SPEED</div>
+    <h2 class="gov-title">How fast can<br>you click?</h2>
+    <p class="gov-sub">5 seconds. Click anywhere in the zone as fast as you can.<br>Your clicks per second and peak speed are recorded.</p>
+    <button class="big-pill pill-c" id="cBtnStart">START TEST</button>
   </div>
 
-  <!-- Live game — shown during countdown AND during test -->
   <div id="cGame" class="cps-game" style="display:none">
-
-    <div class="cps-top-bar">
-      <div class="cps-live-stat">
-        <div class="cps-live-lbl">CLICKS PER SECOND</div>
-        <div class="cps-live-val" id="cCPS">0.0</div>
+    <!-- Compact stats bar at top -->
+    <div class="cps-stats-bar">
+      <div class="cps-stat-block">
+        <div class="cps-stat-lbl">CLICKS / SEC</div>
+        <div class="cps-stat-val" id="cCPS">0.0</div>
       </div>
-      <div class="cps-timer-ring">
+      <div class="cps-ring-wrap">
         <svg viewBox="0 0 120 120" class="cps-ring-svg">
           <circle cx="60" cy="60" r="52" class="cps-ring-bg"/>
-          <circle cx="60" cy="60" r="52" class="cps-ring-fill" id="cRingFill"/>
+          <circle cx="60" cy="60" r="52" class="cps-ring-fg" id="cRingFill"/>
         </svg>
-        <div class="cps-timer-inner">
-          <div class="cps-time-val" id="cTimeVal">5</div>
-          <div class="cps-time-lbl">sec</div>
+        <div class="cps-ring-inner">
+          <div class="cps-ring-num" id="cTimeVal">5</div>
+          <div class="cps-ring-lbl">sec</div>
         </div>
       </div>
-      <div class="cps-live-stat" style="text-align:right">
-        <div class="cps-live-lbl">TOTAL CLICKS</div>
-        <div class="cps-live-val" id="cClicks">0</div>
+      <div class="cps-stat-block cps-stat-right">
+        <div class="cps-stat-lbl">TOTAL CLICKS</div>
+        <div class="cps-stat-val" id="cClicks">0</div>
       </div>
     </div>
-    <button class="cps-click-zone" id="cClickZone">
-      <div id="cCountBadge" class="cps-count-badge" style="display:none">
-        <div class="cps-count-num" id="cCountNum">3</div>
-        <div class="cps-count-lbl">GET READY — hover here</div>
+
+    <!-- Big click zone fills remaining space -->
+    <button class="cps-zone" id="cClickZone">
+      <div class="cps-ripple-layer" id="cRippleLayer"></div>
+      <div id="cCountBadge" class="cps-badge" style="display:none">
+        <div class="cps-badge-num" id="cCountNum">3</div>
+        <div class="cps-badge-lbl">GET READY</div>
       </div>
-      <span class="cps-click-text">CLICK HERE</span>
-      <span class="cps-click-sub">as fast as you can</span>
+      <span class="cps-zone-text">CLICK HERE</span>
+      <span class="cps-zone-sub">as fast as you can</span>
     </button>
   </div>
 
-  <div id="cOvEnd" class="game-ov" style="display:none">
-    <div class="ov-chip">TEST COMPLETE</div>
-    <div class="ov-title">Results</div>
-    <div class="result-grid">
-      <div class="rg-hero"><div class="rg-lbl">CLICKS / SEC</div><div class="rg-val" id="cRCPS">—</div></div>
-      <div class="rg-hero"><div class="rg-lbl">TOTAL CLICKS</div><div class="rg-val" id="cRClicks">—</div></div>
+  <div id="cOvEnd" class="gov" style="display:none">
+    <div class="mode-chip mode-chip-c">TEST COMPLETE</div>
+    <h2 class="gov-title">Results</h2>
+    <div class="res-heroes">
+      <div class="res-hero"><div class="res-hl">CLICKS / SEC</div><div class="res-hv" id="cRCPS">—</div></div>
+      <div class="res-hero"><div class="res-hl">TOTAL CLICKS</div><div class="res-hv" id="cRClicks">—</div></div>
     </div>
-    <div class="result-rows">
-      <div class="rrow hi"><span>PEAK CPS</span><span id="cRPeak">—</span></div>
-      <div class="rrow"><span>PERSONAL BEST</span><span id="cRBest">—</span></div>
+    <div class="res-rows">
+      <div class="res-row res-row-hi"><span>PEAK CPS</span><span id="cRPeak">—</span></div>
+      <div class="res-row"><span>PERSONAL BEST</span><span id="cRBest">—</span></div>
     </div>
     <div class="result-grade" id="cGrade"></div>
-    <div class="ov-btns">
-      <button class="pill pill-green" id="cBtnRetry">RETRY</button>
-      <button class="pill pill-ghost" id="cBtnMenu">MENU</button>
+    <div class="gov-btns">
+      <button class="big-pill pill-c" id="cBtnRetry">RETRY</button>
+      <button class="ghost-pill" id="cBtnMenu">MENU</button>
     </div>
   </div>
 </div>
