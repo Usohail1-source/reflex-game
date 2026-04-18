@@ -6,13 +6,19 @@
 <meta name="description" content="MouseTracer — Test your reaction speed, aim precision, and click speed. Three mouse skill tests by Umar Sohail.">
 <meta name="theme-color" content="#08090f">
 <title>MouseTracer — Mouse Skill Tester</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <!-- ════════ HOME ════════ -->
 <div id="pgHome" class="pg pg-show">
+  <div id="mobileBlock" style="display:none;position:fixed;inset:0;z-index:9999;background:#08090f;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:40px;text-align:center;">
+    <div style="font-size:3rem;">🖱️</div>
+    <div style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:#eef0f8;letter-spacing:.04em;">Desktop Only</div>
+    <div style="font-size:.9rem;color:#a8bcd4;line-height:1.8;max-width:320px;">MouseTracer tests your actual mouse skills — reaction speed, aim, and click rate.<br><br>Open it on a computer with a mouse to play.</div>
+    <div style="font-size:.62rem;letter-spacing:.28em;color:#6a82a0;margin-top:8px;">MOUSE SKILL TESTER · BY UMAR SOHAIL</div>
+  </div>
   <div class="home-noise"></div>
   <div class="home-glow-a"></div>
   <div class="home-glow-b"></div>
@@ -21,7 +27,7 @@
     <header class="home-hdr">
       <div class="home-pill-tag">MOUSE SKILL TESTER · BY UMAR SOHAIL</div>
       <h1 class="home-title">MOUSE<br><span>TRACER</span></h1>
-      <p class="home-sub">Three tests. Measure your mouse speed, precision, and control.</p>
+      <p class="home-sub">Three tests. Measure what your hands are really capable of.</p>
     </header>
 
     <div class="mode-grid">
@@ -36,7 +42,7 @@
           </div>
         </div>
         <div class="mcard-label">Reaction Test</div>
-        <div class="mcard-body">Wait for the screen to turn green — click the instant it does. Measures your raw reaction speed in milliseconds.</div>
+        <div class="mcard-body">Wait for the screen to turn green — click the instant it does. Measures your raw reflex in milliseconds.</div>
         <div class="mcard-meta">
           <span class="mcard-best" id="hReactBest"></span>
           <span class="mcard-go">START →</span>
@@ -54,7 +60,7 @@
           </div>
         </div>
         <div class="mcard-label">Aim Trainer</div>
-        <div class="mcard-body">Targets appear at random positions. Hit them before they expire. 3 lives. Endless scaling — how far can your mouse skill take you?</div>
+        <div class="mcard-body">Targets appear at random positions. Click them before they expire. 3 lives. No level cap — how far can you go?</div>
         <div class="mcard-meta">
           <span class="mcard-best mcard-best-t" id="hTrackBest"></span>
           <span class="mcard-go mcard-go-t">START →</span>
@@ -74,7 +80,7 @@
           </div>
         </div>
         <div class="mcard-label">Click Speed</div>
-        <div class="mcard-body">5 seconds. Click the zone as fast as humanly possible. Measures clicks per second and peak clicking speed.</div>
+        <div class="mcard-body">5 seconds. Click the zone as fast as humanly possible. Measures your clicks per second and peak speed.</div>
         <div class="mcard-meta">
           <span class="mcard-best mcard-best-c" id="hCPSBest"></span>
           <span class="mcard-go mcard-go-c">START →</span>
