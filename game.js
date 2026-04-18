@@ -243,8 +243,9 @@ function rRound(){
 
 function rGo(){
   rScreen('rGo');
-  R.goAt = performance.now();
-requestAnimationFrame(()=> sfx.go());
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    R.goAt=performance.now(); sfx.go();
+  }));
 }
 
 document.getElementById('pgReact').addEventListener('pointerdown',e=>{
@@ -332,16 +333,21 @@ const T={
   combo:0, bestCombo:0,
   startTime:0, lf:0,
 };
-const LEVEL_HIT=8;
+const LEVEL_HIT=6; // level up every 6 hits — snappier progression
 let tSpawnTimer=0;
 
 function tLvlCfg(l){
   const k=l-1;
   return{
-    targetLife:  Math.max(750,  2400 - k*60),
-spawnDelay:  Math.max(180,  950  - k*30),
-radius:      Math.max(14,   34   - k*0.6),
-multi:       k<4?1 : k<9?2 : k<14?3 : 4,
+    // Life drains faster each level, floor at 600ms
+    targetLife:  Math.max(600, 2400 - k*80),
+    // Spawn delay shrinks — floor at 100ms  
+    spawnDelay:  Math.max(100, 1000 - k*40),
+    // Targets get smaller — floor at 14px radius
+    radius:      Math.max(14, 36 - k*0.8),
+    // How many can be on screen simultaneously
+    // 1 → 2 → 3 → 4 → 5 at higher levels
+    multi:       k<3?1 : k<7?2 : k<11?3 : k<16?4 : 5,
   };
 }
 
@@ -356,9 +362,10 @@ function tMkTarget(){
 
 function tSpawn(){
   const cfg=tLvlCfg(T.level);
-  if(T.targets.filter(t=>!t.hit).length>=cfg.multi) return;
-  T.targets.push(tMkTarget());
-  sfx.click();
+  const alive=T.targets.filter(t=>!t.hit).length;
+  // At high levels, fill ALL empty slots every spawn tick
+  const toSpawn=Math.min(cfg.multi-alive, cfg.multi);
+  for(let i=0;i<toSpawn;i++) T.targets.push(tMkTarget());
 }
 
 function tCheckHit(mx,my){
@@ -372,21 +379,30 @@ function tCheckHit(mx,my){
 function tHitTarget(t){
   t.hit=true; sfx.hit();
   T.hits++; T.combo++; if(T.combo>T.bestCombo)T.bestCombo=T.combo;
-  T.score += Math.round(10 * Math.sqrt(T.level));
+  T.score+=Math.round(10*T.level); T.hitsThisLevel++;
   for(let i=0;i<14;i++){
     const a=Math.PI*2*i/14+Math.random()*.5, sp=120+Math.random()*240;
     T.sparks.push({x:t.x,y:t.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:1,decay:.03+Math.random()*.03,sz:2.5+Math.random()*5,col:'#24f07a'});
   }
-  if(T.combo===5) { T.score+=50;  sfx.ding(); tToast('🔥 5 STREAK +50'); }
-  if(T.combo===10){ T.score+=150; sfx.ding(); tToast('⚡ 10 STREAK +150'); }
-  if(T.hitsThisLevel>=LEVEL_HIT){ T.level++; T.hitsThisLevel=0; sfx.ding(); tToast('LEVEL '+T.level); }
+  // Streak bonuses — score only, no distracting toast mid-game
+  if(T.combo===5)  { T.score+=50;  sfx.ding(); }
+  if(T.combo===10) { T.score+=150; sfx.ding(); }
+  if(T.combo===20) { T.score+=400; sfx.ding(); }
+  // Level up
+  if(T.hitsThisLevel>=LEVEL_HIT){
+    T.level++; T.hitsThisLevel=0; sfx.ding();
+    // Flash HUD badge
+    const lb=document.getElementById('tHudLevelBadge');
+    if(lb){ lb.style.color='#fff'; lb.style.boxShadow='0 0 18px #24f07a'; setTimeout(()=>{ lb.style.color=''; lb.style.boxShadow=''; },500); }
+    // Small announcement near the top — not centre screen
+    tLevelToast('LEVEL '+T.level);
+  }
   tHudUpdate();
 }
 
 function tMissTarget(t){
   t.hit=true; T.misses++; T.combo=0; T.lives--;
   shake();
-  sfx.miss();
   // Flash miss sparks
   for(let i=0;i<8;i++){
     const a=Math.PI*2*i/8, sp=80+Math.random()*120;
@@ -410,6 +426,39 @@ tcv.addEventListener('touchstart',e=>{
   T.mx=e.touches[0].clientX; T.my=e.touches[0].clientY;
   tCheckHit(T.mx,T.my);
 },{passive:false});
+
+function tLevelToast(txt){
+  const el=document.createElement('div');
+  el.style.cssText=[
+    'position:fixed',
+    'left:50%',
+    'top:88px',           // just below the HUD bar
+    'transform:translateX(-50%) scale(.8)',
+    'font-family:Syne,sans-serif',
+    'font-size:clamp(.9rem,2.5vw,1.15rem)',
+    'font-weight:800',
+    'letter-spacing:.22em',
+    'color:#24f07a',
+    'background:rgba(8,9,15,.82)',
+    'border:1px solid rgba(36,240,122,.28)',
+    'border-radius:999px',
+    'padding:7px 22px',
+    'white-space:nowrap',
+    'pointer-events:none',
+    'z-index:300',
+    'backdrop-filter:blur(8px)',
+    'animation:lvlToast .9s cubic-bezier(.34,1.56,.64,1) forwards',
+  ].join(';');
+  el.textContent=txt;
+  if(!document.getElementById('_ltkf')){
+    const s=document.createElement('style');
+    s.id='_ltkf';
+    s.textContent='@keyframes lvlToast{0%{opacity:0;transform:translateX(-50%) scale(.75)}15%{opacity:1;transform:translateX(-50%) scale(1.04)}70%{opacity:1;transform:translateX(-50%) scale(1)}100%{opacity:0;transform:translateX(-50%) scale(.95) translateY(-8px)}}';
+    document.head.appendChild(s);
+  }
+  document.body.appendChild(el);
+  setTimeout(()=>{ if(el.parentNode)el.remove(); },950);
+}
 
 function tToast(txt){
   const el=document.createElement('div');
@@ -443,11 +492,9 @@ function tStart(){
 
 function tOver(){
   T.on=false; tHudShow(false);
-  const avgSpeed = T.hits > 0 
-  ? ((performance.now() - T.startTime) / T.hits).toFixed(0)
-  : 0;
-
-document.getElementById('tRTracking').textContent = avgSpeed + ' ms';
+  const acc=T.hits+T.misses>0?Math.round(T.hits/(T.hits+T.misses)*100):0;
+  if(T.score>(DB.d.tb||0)){ DB.d.tb=T.score; DB.save(); syncHome(); }
+  document.getElementById('tRTracking').textContent=acc+'%';
   document.getElementById('tRTime').textContent=T.hits;
   document.getElementById('tRScore').textContent=T.score;
   document.getElementById('tRLevel').textContent=T.level;
@@ -457,12 +504,6 @@ document.getElementById('tRTracking').textContent = avgSpeed + ' ms';
 }
 
 function tHudUpdate(){
-  const avgSpeed = T.hits > 0 
-  ? ((performance.now() - T.startTime) / T.hits).toFixed(0)
-  : 0;
-
-const spd = document.getElementById('tHudSpeed');
-if (spd) spd.textContent = avgSpeed + ' ms';
   const acc=T.hits+T.misses>0?Math.round(T.hits/(T.hits+T.misses)*100):0;
   document.getElementById('tHudScore').textContent=T.score;
   document.getElementById('tHudFill').style.width=acc+'%';
@@ -589,7 +630,10 @@ function tLoop(ts){
   const cfg=tLvlCfg(T.level);
   if(tSpawnTimer>=cfg.spawnDelay){ tSpawnTimer=0; tSpawn(); }
   const now=Date.now();
-  for(const t of T.targets){ if(!t.hit&&now-t.spawnT>=t.life) tMissTarget(t); }
+  // Each target uses its OWN stored life — never overwrite it
+  for(const t of T.targets){
+    if(!t.hit && now-t.spawnT>=t.life) tMissTarget(t);
+  }
   T.targets=T.targets.filter(t=>!t.hit);
   tDrawBg(dt);
   for(const t of T.targets) tDrawTarget(t,now);
